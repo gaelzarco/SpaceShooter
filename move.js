@@ -48,9 +48,6 @@ function move(element) {
             if (e.key === 'ArrowDown') {
                 direction = 'south'
             }
-            if (e.key === ' ') {
-                fireLaser(ship)
-            }
             callback(direction)
         })
 

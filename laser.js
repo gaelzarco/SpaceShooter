@@ -1,3 +1,9 @@
+document.addEventListener('keydown', function(e) {
+    if (e.key === ' ') {
+        fireLaser(ship)
+    }
+})
+
 function fireLaser (ship) {
     let laser = createLaser(ship)
     document.getElementById('main').appendChild(laser)
@@ -7,8 +13,9 @@ function fireLaser (ship) {
 }
 
 function createLaser(ship) {
-    let xPos = parseInt(window.getComputedStyle(ship).getPropertyValue('left'))
-    let yPos = parseInt(window.getComputedStyle(ship).getPropertyValue('top'))
+    let shipPos = ship.getPosition()
+    let xPos = shipPos.x
+    let yPos = shipPos.y
     let newLaser = document.createElement('img')
     newLaser.src = 'assets/laser.png'
     newLaser.style.left = `${xPos}px`
@@ -17,8 +24,16 @@ function createLaser(ship) {
     return newLaser
 }
 
+function shipPos() {
+        let x = left;
+        let y = bottom;
+
+        element.style.left = x + 'px'
+        element.style.bottom = y + 'px'
+}
+
 function moveLaser(laser) {
-    setInterval(() => {
+    let laserInterval = setInterval(() => {
         let xPos = parseInt(laser.style.left)
         if (xPos === 800) {
             laser.remove()
