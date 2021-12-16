@@ -1,3 +1,3 @@
 document.addEventListener('DOMContentLoaded', createAssets())
 
-const ship = newShip(100, 100)
+const ship = newShip(500, 200)
