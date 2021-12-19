@@ -1,10 +1,3 @@
-
-    const main = document.getElementById('main')
-    main.style.backgroundimage = "url('stars.gif')"
-    main.style.height = '90vh'
-    main.style.width = '90vw'
-    main.style.margin = 'auto'
-
     const playerShip = newShip(400,400)
 
     const bgMusic1 = new Audio('gameMusic1.wav')
@@ -14,13 +7,13 @@
     bgMusic2.volume = 0.5,
 
     bgMusic3 = new Audio('gameMusic3.wav')
-    bgMusic3.volume = 0.5 
+    bgMusic3.volume = 0.5; 
 
-    const gameMusic = [bgMusic1, bgMusic2, bgMusic3]
+    const gameMusic = [bgMusic1, bgMusic2, bgMusic3],
 
-    const rand = gameMusic[Math.floor(Math.random()*gameMusic.length)]
+    rand = gameMusic[Math.floor(Math.random()*gameMusic.length)];
 
-    // rand.play()
+    rand.play()
 
     rand.addEventListener('ended', function() {
         this.currentTime = 0;
@@ -81,7 +74,7 @@ function move(element) {
             element.style.left = x + 'px'
             element.style.bottom = y + 'px'
         }
-        setInterval(moveShip, 1)
+        setInterval(moveShip, 5)
 
         document.addEventListener('keydown', function(e) {
             if (e.repeat) return
@@ -98,14 +91,10 @@ function move(element) {
             if (e.key === 'ArrowDown') {
                 direction = 'south'
             }
-            if (e.key === ' ') {
-                shoot = true
-            }
         })
 
-        document.addEventListener('keyup', function(e) {
+        document.addEventListener('keyup', function() {
             direction = null
-            shoot = false
         })
     }
 
@@ -123,7 +112,7 @@ function whenSpaceBarPressed() {
             fireLaser()
         }
     }
-    setInterval(shootLaser, 100)
+    setInterval(shootLaser, 150)
 
     document.addEventListener('keydown', function(e) {
         if (e.key === ' ') {
@@ -132,7 +121,6 @@ function whenSpaceBarPressed() {
     })
 
     document.addEventListener('keyup', function(e) {
-        direction = null
         shoot = false
     })
 
@@ -142,13 +130,13 @@ function whenSpaceBarPressed() {
 }
 
 function createLaser() {
-    let x = document.getElementById('playership').getBoundingClientRect().left
-    let y = document.getElementById('playership').getBoundingClientRect().top
+    let x = parseInt(document.getElementById('playership').getBoundingClientRect().left)
+    let y = parseInt(document.getElementById('playership').getBoundingClientRect().top)
     let newLaser = document.createElement('img')
-    newLaser.src = 'laser.jpg'
+    newLaser.src = 'laser.png'
     newLaser.classList.add('laser')
-    newLaser.style.left = `${x + 10}px`
-    newLaser.style.top = `${y - 10}px`
+    newLaser.style.left = `${x + 23}px`
+    newLaser.style.top = `${y}px`
     return newLaser
 }
 
@@ -157,4 +145,16 @@ function fireLaser() {
     main.appendChild(laser)
     let laserSFX = new Audio('laserSFX.wav')
     laserSFX.play()
+    moveLaser(laser)
+}
+
+function moveLaser(laser) {
+    setInterval(() => {
+        let y = parseInt(laser.style.top)
+        if (y < 8) {
+            laser.remove()
+        } else {
+            laser.style.top = `${y - 4}px`
+        }
+    }, 10)
 }
