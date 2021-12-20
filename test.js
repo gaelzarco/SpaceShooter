@@ -1,16 +1,34 @@
-    const playerShip = newShip(400,400)
+const playerShip = newShip(400,400),
+score = document.querySelector('#score span')
+menuAudio = new Audio('assets/sfx/menu.flac');
+menuAudio.play()
+
+
+let startBtn = document.getElementById('start'),
+flavorText = document.getElementById('flavortext');
+
+startBtn.addEventListener('click',() => {
+    createAssets()
+})
+
+function createAssets() {
+    startBtn.style.display = 'none'
+    flavorText.style.display = 'none'
+    menuAudio.pause()
+
+    setInterval(createEnemy, 1500)
 
     const bgMusic1 = new Audio('assets/sfx/gameMusic1.wav')
     bgMusic1.volume = 0.4,
-
+    
     bgMusic2 = new Audio('assets/sfx/gameMusic2.wav')
     bgMusic2.volume = 0.4,
-
+    
     bgMusic3 = new Audio('assets/sfx/gameMusic3.wav')
     bgMusic3.volume = 0.4; 
-
+    
     const gameMusic = [bgMusic1, bgMusic2, bgMusic3],
-
+    
     rand = gameMusic[Math.floor(Math.random()*gameMusic.length)];
 
     rand.play()
@@ -19,6 +37,7 @@
         this.currentTime = 0;
         this.play();
     }, false);
+}    
 
 function newShip(x, y) {
     const element = document.getElementById('playership')
@@ -156,10 +175,9 @@ function moveLaser(laser) {
             if (laserCollision(laser, enemy, shipTop)) {
                 let explosion = new Audio('assets/sfx/explosion_1.wav')
                 explosion.play()
-                enemy.src = 'assets/enemy/explosion.gif'
-                enemy.classList.remove('enemy')
-                enemy.classList.add('dead-enemy')
+                enemy.remove()
                 laser.remove()
+                score.innerText = parseInt(score.innerText) + 100
             }
         })
         if (y <= 5) {
@@ -171,7 +189,7 @@ function moveLaser(laser) {
     }, 10)
 }
 
-const enemyImgs = ['assets/enemy/coinn.gif', 'assets/enemy/asteroid.gif', 'assets/enemy/ufo.gif']
+const enemyImgs = ['assets/enemy/alien.gif', 'assets/enemy/asteroid.gif', 'assets/enemy/ufo.gif']
 
 function createEnemy() {
     let newEnemy = document.createElement('img'),
@@ -191,12 +209,10 @@ function moveEnemy(enemy) {
         if (y >= 740) {
             enemy.remove()
         } else {
-            enemy.style.top = `${y + 2}px`
+            enemy.style.top = `${y + 3}px`
         }
     }, 20)
 }
-
-setInterval(createEnemy, 1500)
 
 function laserCollision(laser, enemy, shipTop) {
     let laserLeft = parseInt(laser.style.left),
@@ -204,7 +220,7 @@ function laserCollision(laser, enemy, shipTop) {
     enemyTop = parseInt(enemy.style.top),
     enemyLeft = parseInt(enemy.style.left),
     enemyRight = enemyLeft + 90;
-    if(laserTop > 8 && laserTop - 70 < enemyTop) {
+    if(laserTop > 20 && laserTop - 70 < enemyTop) {
         if(laserLeft >= enemyLeft && laserLeft <= enemyRight) {
             if (shipTop > enemyTop) {
                 return true
