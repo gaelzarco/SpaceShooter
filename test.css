@@ -1,0 +1,43 @@
+@font-face { font-family: deathstar; src: url('assets/deathstar.otf'); }
+
+body {
+    background-color: rgb(0, 0, 0);
+    font-family: deathstar;
+    color: whitesmoke;
+}
+
+#playership {
+    height: 55px;
+    width: 70px;
+}
+
+#main {
+    background-image: url('assets/background.gif');
+    border: rgb(255, 0, 234) solid 5px;
+    height: 800px;
+    width: 800px;
+}
+
+#score {
+    width: 800px;
+    text-align: center;
+}
+
+.enemy {
+    width: 90px;
+    height: 90px;
+    position: absolute;
+}
+
+.dead-enemy {
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    opacity: 0;
+}
+
+.laser {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+}
